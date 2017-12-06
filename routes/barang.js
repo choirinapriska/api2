@@ -44,6 +44,7 @@ module.exports = {
                     response.push({'msg' : 'No Result Found'});
                 }
 
+                con.release();
                 res.status(200).send(JSON.stringify(response));
             } else {
                 res.status(400).send(err);
@@ -72,6 +73,8 @@ module.exports = {
                     response.push({'msg' : 'No Result Found'});
                 }
 
+                con.release();
+
                 res.status(200).send(JSON.stringify(response));
             } else {
                 res.status(400).send(err);
@@ -97,7 +100,7 @@ module.exports = {
                 } else {
                     response.push({'msg' : 'No Result Found'});
                 }
-
+                con.release();
                 res.status(200).send(JSON.stringify(response));
             } else {
                 res.status(400).send(err);
@@ -137,7 +140,7 @@ module.exports = {
                     } else {
                         response.push({'msg' : 'No Result Found'});
                     }
-                    connection.release();
+                    con.release();
                     res.status(200).send(JSON.stringify(response));
                 } else {
                     res.status(400).send(err);
@@ -188,7 +191,7 @@ module.exports = {
                     } else {
                         response.push({'msg' : 'No Result Found'});
                     }
-                    connection.release();
+                    con.release();
                     res.status(200).send(JSON.stringify(response));
                 } else {
                     res.status(400).send(err);
