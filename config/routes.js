@@ -3,7 +3,7 @@ var path = require('path');
 
 
 module.exports = function(app,envConfig){
-	
+	console.log('route');
 	// register route controllers
 	var barang = require(path.join(envConfig.rootPath,'/routes/barang'));
 	// var dapur = require(path.join(envConfig.rootPath,'/routes/dapur'));
@@ -26,6 +26,7 @@ module.exports = function(app,envConfig){
 	var route = express.Router();
  	app.use('/barang', route); 	
 
+ 	app.get('/', barang.get);
 	app.get('/barang/get', barang.get);
 	app.get('/barang/getInput', barang.getInput);
 	route.get('/get/:id',function(req,res){
