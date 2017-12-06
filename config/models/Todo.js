@@ -3,7 +3,7 @@ var conn = {};
 
 module.exports = { 
     con : function(){
-    	var connection = mysql.createConnection({
+    	var connection = mysql.createPool({
 			// host     : '127.0.0.1',
 	  //   	database : "stok",
 	  //   	user     : 'root',
