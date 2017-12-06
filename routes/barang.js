@@ -30,26 +30,39 @@ module.exports = {
         res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, HEAD');
         res.setHeader('Content-Type', 'application/json');  
 
-        con.query(query, function(err, rows, fields) {
-            if (!err){
-                var response = [];
-                response.push({'result' : 'success'});
+        con.getConnection(function(err, connection) {
+          // Use the connection
+          connection.query(query, function (error, results, fields) {
+            // And done with the connection.
+            connection.release();
 
-                if (rows.length != 0) {
-                    var dt = genHead(rows);
-                    
-                    response.push({'header' : dt[0].header});             
-                    response.push({'data' : dt[0].data}); 
-                } else {
-                    response.push({'msg' : 'No Result Found'});
-                }
+            // Handle error after the release.
+            if (error) throw error;
 
-                con.release();
-                res.status(200).send(JSON.stringify(response));
-            } else {
-                res.status(400).send(err);
-            }
+            // Don't use the connection here, it has been returned to the pool.
+          });
         });
+
+        // con.query(query, function(err, rows, fields) {
+        //     if (!err){
+        //         var response = [];
+        //         response.push({'result' : 'success'});
+
+        //         if (rows.length != 0) {
+        //             var dt = genHead(rows);
+                    
+        //             response.push({'header' : dt[0].header});             
+        //             response.push({'data' : dt[0].data}); 
+        //         } else {
+        //             response.push({'msg' : 'No Result Found'});
+        //         }
+
+        //         con.release();
+        //         res.status(200).send(JSON.stringify(response));
+        //     } else {
+        //         res.status(400).send(err);
+        //     }
+        // });
 
     },
     getInput: function(req, res){
